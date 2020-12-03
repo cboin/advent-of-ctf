@@ -51,5 +51,29 @@ curl 'https://02.adventofctf.com/index.php' -H 'User-Agent: Mozilla/5.0 (X11; Li
 [...]
 	<body>
 </html>
+```
 
+# Day 3
+## Description
+For this challenge you will, again, need to bypass the login mechanism.
 
+Visit https://03.adventofctf.com to start the challenge.
+
+## Methodology
+As in day 2, we have to bypass the login mechanism. In the sources, the form login call the checkPass(); functionon the sumbit action. The code of the function is:
+```javascript
+function checkPass()
+{
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+
+    var novi = '-NOVI';
+
+    if (password == btoa(username + novi)) {
+        window.setTimeout(function() {
+            window.location.assign('inde' + 'x.php?username='+ username +'&password=' + password);
+        }, 500);
+    }
+}
+```
+So, we have to chose a random username, than call btoa with the chosen username and append -NOVI to it. The flag is: `NOVI{javascript_is_not_s@fe}`
